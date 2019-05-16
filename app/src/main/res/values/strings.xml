@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MVVM_ToDo_App_Impl</string>
+    <string name="add_task_button">Add Task</string>
+    <string name="placeholder_text">placeholder text</string>
+    <string name="enter_todo_task_here">Enter todo task here...</string>
+    <string name="enter_task">Enter Task</string>
+</resources>
