@@ -39,14 +39,14 @@ public abstract class TaskRoomDatabase extends RoomDatabase {
     //    populate database in background
     private static class PopulateDbAsync extends AsyncTask<Void, Void, Void> {
         private final TaskDao mTaskDao;
-        String[] tasks= {"Do Laundry", "Gym", "Bible Study"};
+        String[] tasks= {};
         PopulateDbAsync(TaskRoomDatabase db){
             mTaskDao = db.taskDao();
         }
 
         @Override
         protected Void doInBackground(Void... voids) {
-            mTaskDao.deleteAll();
+//            mTaskDao.deleteAll();
 
             for(int i=0; i<= tasks.length-1; i++){
                 Task task= new Task(tasks[i]);

@@ -4,4 +4,5 @@
     <string name="placeholder_text">placeholder text</string>
     <string name="enter_todo_task_here">Enter todo task here...</string>
     <string name="enter_task">Enter Task</string>
+    <string name="Enter_Future_Tasks">No Task, Enter Future Tasks</string>
 </resources>

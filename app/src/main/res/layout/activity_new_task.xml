@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,19 +9,31 @@
     android:background="@color/colorPrimary"
     tools:context=".NewTaskActivity">
 
-   <EditText
-       android:id="@+id/edit_task"
-       android:layout_width="wrap_content"
-       style="@style/text_view_style"
-       android:hint="@string/enter_todo_task_here"
-       android:layout_height="wrap_content"
-       android:inputType="textAutoComplete"/>
+    <EditText
+        android:id="@+id/edit_task"
+        style="@style/text_view_style"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="88dp"
+        android:hint="@string/enter_todo_task_here"
+        android:inputType="textAutoComplete"
+        android:orientation="vertical"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
         android:id="@+id/add_task_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="@string/add_task_button" />
+        android:layout_marginStart="12dp"
+        android:layout_marginLeft="12dp"
+        android:layout_marginTop="88dp"
+        android:orientation="vertical"
+        android:text="@string/add_task_button"
+        app:layout_constraintStart_toEndOf="@+id/edit_task"
+        app:layout_constraintTop_toTopOf="parent" />
 
-</LinearLayout>
+</android.support.constraint.ConstraintLayout>

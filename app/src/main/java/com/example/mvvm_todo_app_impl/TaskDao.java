@@ -15,9 +15,7 @@ public interface TaskDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     void insert(Task task);
 
-    @Query("DELETE FROM task_table")
-    void deleteAll();
 
-    @Query("SELECT * from task_table ORDER BY task ASC")
+    @Query("SELECT * from task_table")
     LiveData<List<Task>> getAllToDoTask();
 }

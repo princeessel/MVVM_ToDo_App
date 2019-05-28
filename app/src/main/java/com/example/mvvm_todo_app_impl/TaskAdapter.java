@@ -31,7 +31,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
            
         }else{
             
-            viewHolder.taskItemView.setText("No Task, Enter Future Tasks ");
+            viewHolder.taskItemView.setText(R.string.Enter_Future_Tasks);
         }
 
     }
