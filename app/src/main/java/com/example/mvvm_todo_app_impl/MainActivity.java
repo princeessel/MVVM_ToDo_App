@@ -17,30 +17,18 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private TaskViewModel mTaskViewModel;
-    public static final int NEW_TASK_ACTIVITY_REQUEST_CODE = 1;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        Button nt_button = findViewById(R.id.nt_button);
-        nt_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(MainActivity.this, NewTaskActivity.class);
-                startActivityForResult(intent, NEW_TASK_ACTIVITY_REQUEST_CODE);
-            }
-        });
-
-        recyclerView=(RecyclerView) findViewById(R.id.task_recyclerView);
-        final TaskAdapter mTaskAdapter = new TaskAdapter(this);
-
+        recyclerView = (RecyclerView) findViewById(R.id.task_recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        final TaskAdapter mTaskAdapter = new TaskAdapter(getApplicationContext());
         recyclerView.setAdapter(mTaskAdapter);
-
-
-
 
         mTaskViewModel = ViewModelProviders.of(this).get(TaskViewModel.class);
         mTaskViewModel.getAllToDoTask().observe(this, new Observer<List<Task>>() {
@@ -49,18 +37,55 @@ public class MainActivity extends AppCompatActivity {
                 mTaskAdapter.setTasks(tasks);
             }
         });
-    }
-        public void onActivityResult( int requestCode, int resultCode, Intent data){
-            super.onActivityResult(requestCode, resultCode, data);
 
-            if (requestCode == NEW_TASK_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
-                Task task = new Task(data.getStringExtra(NewTaskActivity.EXTRA_TASK));
-                mTaskViewModel.insert(task);
-            } else {
-                Toast.makeText(
-                        getApplicationContext(),
-                        "Hey",
-                        Toast.LENGTH_LONG).show();
+        Button nt_button = findViewById(R.id.nt_button);
+        nt_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, AddEditTaskActivity.class);
+                startActivityForResult(intent, AppConstants.ADD_TASK_REQUEST_CODE);
             }
+        });
+
+
+        mTaskAdapter.setOnItemClickListener(new TaskAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(Task task) {
+                Intent intent = new Intent(MainActivity.this, AddEditTaskActivity.class);
+                intent.putExtra(AppConstants.EXTRA_ID, task.getId());
+                intent.putExtra(AppConstants.EXTRA_TASK, task.getTask());
+                startActivityForResult(intent, AppConstants.EDIT_TASK_REQUEST_CODE);
+
+            }
+        });
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (requestCode == AppConstants.ADD_TASK_REQUEST_CODE && resultCode == RESULT_OK) {
+            String tasks = data.getStringExtra(AppConstants.EXTRA_TASK);
+            Task task = new Task(tasks);
+            mTaskViewModel.insert(task);
+
+            Toast.makeText(getApplicationContext(), "Task Saved", Toast.LENGTH_LONG).show();
+        } else if (requestCode == AppConstants.EDIT_TASK_REQUEST_CODE && resultCode == RESULT_OK) {
+            int id = data.getIntExtra(AppConstants.EXTRA_ID, -1);
+
+            if (id == -1) {
+                Toast.makeText(getApplicationContext(), "Task Can't be Updated", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            String tasks = data.getStringExtra(AppConstants.EXTRA_TASK);
+            Task task = new Task(tasks);
+            task.setId(id);
+            mTaskViewModel.update(task);
+
+            Toast.makeText(getApplicationContext(), "Task Updated", Toast.LENGTH_LONG).show();
+
+        } else {
+            Toast.makeText(getApplicationContext(), "Task Not Saved", Toast.LENGTH_LONG).show();
         }
     }
+}

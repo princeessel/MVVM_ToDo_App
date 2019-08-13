@@ -9,16 +9,16 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
 
-@Database(entities ={Task.class}, version= 1, exportSchema =false)
+@Database(entities ={Task.class}, version= 4, exportSchema =false)
 public abstract class TaskRoomDatabase extends RoomDatabase {
     public abstract TaskDao taskDao();
     private static TaskRoomDatabase INSTANCE;
 
     public static TaskRoomDatabase getDatabase(final Context context){
-        if (INSTANCE==null){
+        if (INSTANCE == null){
             synchronized (TaskRoomDatabase.class){
-                if(INSTANCE==null){
-                    INSTANCE= Room.databaseBuilder(context.getApplicationContext(),TaskRoomDatabase.class, "task_db")
+                if(INSTANCE == null){
+                    INSTANCE = Room.databaseBuilder(context.getApplicationContext(),TaskRoomDatabase.class, "task_db")
                                   .fallbackToDestructiveMigration()
                                   .addCallback(sRoomDatabaseCallback)
                                   .build();
@@ -56,5 +56,3 @@ public abstract class TaskRoomDatabase extends RoomDatabase {
         }
     }
 }
-
-
