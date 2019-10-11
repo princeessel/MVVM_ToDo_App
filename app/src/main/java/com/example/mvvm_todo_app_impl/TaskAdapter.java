@@ -63,6 +63,10 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.ViewHolder> {
         notifyDataSetChanged();
     }
 
+    public Task getTaskAt(int position){
+        return mTasks.get(position);
+    }
+
     @Override
     public int getItemCount() {
         if (mTasks != null)
